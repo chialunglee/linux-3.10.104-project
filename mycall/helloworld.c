@@ -34,21 +34,21 @@ static unsigned long vaddr2paddr(struct task_struct* tsk,unsigned long vaddr) {
 	return paddr;
 }
 
-asmlinkage void linux_survey_TT(unsigned long *result) {
+asmlinkage void linux_survey_TT(unsigned long *result_virtual, unsigned long *result_physical) {
 	struct task_struct *ts = current;
 	struct vm_area_struct *vma = ts->mm->mmap;
 	do {
 		unsigned long page;
-		// printk("%lx\n", vma->vm_start);
-		*result = vma->vm_start;
-		result += 1;
-		// printk("%lx\n", vma->vm_end);
-		*result = vma->vm_end;
-		result += 1;
+		*result_virtual = vma->vm_start;
+		result_virtual += 1;
+		*result_virtual = vma->vm_end;
+		result_virtual += 1;
 		page = vma->vm_start;
 		do {
-			printk("0x%lx\n", vaddr2paddr(ts, page));
+			// printk("0x%lx\n", vaddr2paddr(ts, page));
+			*result_physical = vaddr2paddr(ts, page);
+			result_physical += 1;
 			page += 0x1000;
-		}while(page != vm->end);
+		}while(page != vma->vm_end);
 	}while(vma->vm_next && (vma = vma->vm_next));
 }
