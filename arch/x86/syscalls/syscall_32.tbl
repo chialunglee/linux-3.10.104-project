@@ -358,3 +358,5 @@
 349	i386	kcmp			sys_kcmp
 350	i386	finit_module		sys_finit_module
 351	i386	helloworld		linux_survey_TT
+352	i386	helloworld		get_process_zero_session_group
+353	i386	helloworld		get_process_session_group
